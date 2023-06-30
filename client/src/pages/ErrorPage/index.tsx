@@ -1,5 +1,5 @@
 import React from 'react';
-import Error from '../../modules/pages/Error';
+import Error from '../../compound/Error';
 
 
 const ErrorPage = () => {

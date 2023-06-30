@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 
 import router from './router';
 
+import cors from 'cors';
+
 config({ path: "./config/.env" });
 
 const app = express();
@@ -14,6 +16,7 @@ const DB_LOGIN = process.env.DB_LOGIN;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 
 app.use('/api', router);
+app.use(cors())
 
 const start = async () => {
     try {

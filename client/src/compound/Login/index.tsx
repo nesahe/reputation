@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 
-import AuthButton from '../../../components/ui/AuthButton';
+import AuthButton from '../../components/ui/AuthButton';
 
 const Login = () => {
     return (

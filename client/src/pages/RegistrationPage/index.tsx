@@ -1,5 +1,5 @@
 import React from 'react';
-import Registration from '../../modules/pages/Registration';
+import Registration from '../../compound/Registration';
 
 const RegistrationPage = () => {
     return <Registration />
