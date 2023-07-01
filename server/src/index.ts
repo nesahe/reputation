@@ -15,8 +15,8 @@ const DB_NAME = process.env.DB_NAME;
 const DB_LOGIN = process.env.DB_LOGIN;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 
+app.use(cors());
 app.use('/api', router);
-app.use(cors())
 
 const start = async () => {
     try {

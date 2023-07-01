@@ -1,5 +1,6 @@
 import { IUser } from "../../types";
 
+
 export default class UserDto {
     email = '';
     id = '';

@@ -2,15 +2,17 @@ import jwt from 'jsonwebtoken';
 
 import Token from '../../model/Token';
 
-class TokenService {
-    generateTokens(payload: string): { accessToken: string, refreshToken: string } {
+import { IUserDto } from '../../types';
 
-        const accessToken = jwt.sign({ id: payload }, process.env.JWT_ACCESS_SECRET || '', {
+class TokenService {
+    generateTokens(payload: IUserDto): { accessToken: string, refreshToken: string } {
+
+        const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
             expiresIn: '1h'
         })
 
 
-        const refreshToken = jwt.sign({ id: payload }, process.env.JWT_REFRESH_SECRET || '', {
+        const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET || '', {
             expiresIn: '30d'
         })
 
