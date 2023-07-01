@@ -1,0 +1,23 @@
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #4056ca;
+    font-weight: 600;
+    font-size: 30px;
+}
+.root__body {
+    display: flex;
+    justify-content: center;
+    column-gap: 30px;
+    align-items: center;
+}
+
+.root__link {
+    margin-top: 20px;
+    display: block;
+    font-size: 20px;
+    color: #4056ca;
+    text-decoration: underline;
+}
