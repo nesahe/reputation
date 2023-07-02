@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.scss';
 
-import AuthButton from '../../components/ui/AuthButton';
+import AuthButton from '../components/AuthButton';
 import { Link } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useFetching } from '../../hooks/useFetching';
+import { useFetching } from '../../../hooks/useFetching';
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 

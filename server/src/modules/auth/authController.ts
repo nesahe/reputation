@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
+import { IRequestAuth } from "../../types";
+
 import authService from "./authService";
 
 import { logger } from "../../helpers/logging";
@@ -15,7 +17,7 @@ class AuthController {
 
             res.cookie('refreshToken', refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-            return res.json({ accessToken, user, message: 'Login Successful' });
+            return res.json({ accessToken, message: 'Login Successful' });
 
         } catch (e: any) {
             logger.error({ message: e.message })
@@ -69,6 +71,16 @@ class AuthController {
 
         } catch (e) {
             console.log(e)
+        }
+    }
+
+    async getProfile(req: Request, res: Response) {
+        try {
+
+            console.log('ky!');
+
+        } catch (e) {
+            console.log(e);
         }
     }
 }

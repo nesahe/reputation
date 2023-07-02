@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import API_PATHS from "../../../../constants/API_PATHS";
+import API_PATHS from "../../../../../constants/API_PATHS";
 
 interface ILoginForm {
     login: string,

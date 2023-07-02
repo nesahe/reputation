@@ -11,7 +11,6 @@ import ErrorPage from './pages/ErrorPage';
 const AppRouter = () => {
     return (
         <Routes>
-
             <Route element={<PrivateRoute />}>
                 {privateRoutesArr.map(({ path, Component }) =>
                     <Route path={path} key={path} element={<Component />} />

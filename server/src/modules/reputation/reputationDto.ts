@@ -1,18 +1,15 @@
 import { IUser } from "../../types";
 
-
-export default class UserDto {
+export default class ReputationDto {
     login = '';
     id = '';
-    isActivated = false;
+    gender = '';
     reputation = 0;
-    lastVoting = ''
 
     constructor(model: IUser) {
         this.login = model.login;
         this.id = model._id;
-        this.isActivated = model.isActivated;
+        this.gender = model.gender;
         this.reputation = model.reputation;
-        this.lastVoting = model.lastVoting
     }
 }

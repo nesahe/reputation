@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
-import AuthButton from '../../components/ui/AuthButton';
+import AuthButton from '../components/AuthButton';
 import Select, { SingleValue } from 'react-select';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
@@ -9,13 +9,13 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useFetching } from '../../hooks/useFetching';
+import { useFetching } from '../../../hooks/useFetching';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { registrationUser } from './api/registrationUser';
 
-import { checkEmailAuth } from '../../helpers/checkEmailAuth';
+import { checkEmailAuth } from '../../../helpers/checkEmailAuth';
 
 import './index.scss';
 

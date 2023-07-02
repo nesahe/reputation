@@ -7,6 +7,8 @@ import mailService from "../mail/mailService";
 import tokenService from "../token/tokenService";
 import UserDto from "./userDto";
 
+import ProfileDto from "./profileDto";
+
 import { checkEmailAuth } from "./helpers/checkEmailAuth";
 
 class Service {
@@ -58,13 +60,13 @@ class Service {
             throw new Error('Invalid password')
         }
 
-        const userDto = new UserDto(candidate);
-
-        const { accessToken, refreshToken } = tokenService.generateTokens({ ...userDto });
+        const { accessToken, refreshToken } = tokenService.generateTokens({ user: candidate._id });
 
         await tokenService.saveToken(candidate._id, refreshToken);
 
-        return { accessToken, refreshToken, user: userDto };
+        const profile = new ProfileDto(candidate);
+
+        return { accessToken, refreshToken, user: profile };
     }
 
     async activateAccount(activationLink: string) {
@@ -79,6 +81,10 @@ class Service {
         candidate.activationLink = '';
 
         return await candidate.save();
+    }
+
+    async getProfile(id: string) {
+
     }
 
 }

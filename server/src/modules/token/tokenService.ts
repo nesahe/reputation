@@ -2,10 +2,16 @@ import jwt from 'jsonwebtoken';
 
 import Token from '../../model/Token';
 
-import { IUserDto } from '../../types';
+interface IPayloadGenerateJwt {
+    user: string
+}
+
+interface IPayloadJwt {
+    user: string
+}
 
 class TokenService {
-    generateTokens(payload: IUserDto): { accessToken: string, refreshToken: string } {
+    generateTokens(payload: IPayloadGenerateJwt): { accessToken: string, refreshToken: string } {
 
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
             expiresIn: '1h'
@@ -30,6 +36,17 @@ class TokenService {
         }
         const token = new Token({ user, refreshToken });
         return await token.save();
+    }
+
+    validateAccessToken(token: string) {
+        try {
+
+            const { user } = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '') as IPayloadJwt
+            return user
+
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 

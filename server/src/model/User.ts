@@ -7,7 +7,9 @@ const user = new Schema<IUser>({
     password: { type: String, required: true },
     gender: { type: String, required: true },
     isActivated: { type: Boolean, default: false },
-    activationLink: { type: String }
+    activationLink: { type: String },
+    reputation: { type: Number, default: 0 },
+    lastVoting: { type: String, default: '' },
 })
 
 export default model<IUser>('User', user);

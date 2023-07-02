@@ -1,9 +1,9 @@
 .root {
-    background: #e7e6e6;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    border-bottom: 3px solid rgb(230, 230, 230);
     &__body {
         display: flex;
         align-items: center;

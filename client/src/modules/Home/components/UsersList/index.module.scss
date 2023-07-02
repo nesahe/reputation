@@ -1,0 +1,15 @@
+.root {
+    background: rgb(245, 244, 244);
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 600px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    &__title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}
