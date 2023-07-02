@@ -8,5 +8,10 @@ interface ILoginForm {
 }
 
 export const loginUser = async (form: ILoginForm) => {
-    const { data } = await axios.post(`${API_PATHS.login}?login=${form.login}&password=${form.password}`);
+    try {
+        const { data } = await axios.post(`${API_PATHS.login}?login=${form.login}&password=${form.password}`);
+        return { isError: false, message: data.message, accessToken: data.accessToken }
+    } catch (e: any) {
+        return { isError: true, message: e.response.data.message };
+    }
 }

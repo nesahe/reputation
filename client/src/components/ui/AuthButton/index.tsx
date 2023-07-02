@@ -9,15 +9,15 @@ interface AuthButtonProps {
 }
 
 
-const AuthButton: FC<AuthButtonProps> = ({ children, ...props }) => {
+const AuthButton: FC<AuthButtonProps> = ({ children, isLoading, ...props }) => {
 
     const rootClasses = [styles.root];
 
-    props.isLoading && rootClasses.push(styles.loader);
+    isLoading && rootClasses.push(styles.loader);
 
     return (
-        <button disabled={props.isLoading} className={rootClasses.join(' ')} {...props}>
-            {props.isLoading
+        <button disabled={isLoading} className={rootClasses.join(' ')} {...props}>
+            {isLoading
                 ? <img src={Loader} alt="loader" className={styles.root__loader} />
                 : children
             }

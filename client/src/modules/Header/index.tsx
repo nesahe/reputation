@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './images/logo.svg';
 import styles from './index.module.scss';
 import { Link } from 'react-router-dom'
 
 
 const Header = () => {
+
+    const [open, setOpen] = useState<boolean>(false);
+
     return (
         <header className={styles.root}>
             <div className='container'>

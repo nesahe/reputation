@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 import AuthButton from '../../components/ui/AuthButton';
 import Select, { SingleValue } from 'react-select';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
@@ -47,9 +47,10 @@ interface IRegistrationForm {
 
 const Registration = () => {
 
-    const { register, handleSubmit, reset } = useForm<IRegistrationForm>();
+    const { register, handleSubmit } = useForm<IRegistrationForm>();
 
-    const [error, setError] = useState<boolean>(false);
+    const navigate = useNavigate();
+
     const [message, setMessage] = useState<string>('');
 
     const [gender, setGender] = useState<SingleValue<ISelectOptionsItem>>();
@@ -59,17 +60,19 @@ const Registration = () => {
     const [registrationFetch, isRegistrationLoading, registrationError] = useFetching(async () => {
         if (gender) {
             const { isError, message } = await registrationUser({ ...formRegistration, gender: gender.value });
-            setError(isError);
-            setMessage(message);
-
-            if (!isError) {
-                reset();
-            }
+            isError
+                ? setMessage(message)
+                : navigate('/login')
         }
     })
 
     const onSubmit: SubmitHandler<IRegistrationForm> = data => {
         const validationEmailResult = checkEmailAuth(data.login);
+
+        if (data.password.length < 8) {
+            alert(`Password can't be smaller than 8 symbols`);
+            return
+        }
 
         validationEmailResult && gender
             ? setFormRegistration(data)
@@ -87,32 +90,32 @@ const Registration = () => {
 
     return (
         <div className={styles.root}>
+            <Snackbar open={message.length > 0}>
+                <Alert
+                    severity="error"
+                    action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setMessage('');
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    sx={{ mb: 2 }}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
             <form onSubmit={handleSubmit(onSubmit)} className={styles.root__form}>
                 <h4 className={styles.root__title}>Registration</h4>
                 <div className={styles.root__inputs}>
                     <input required {...register('login')} placeholder='Email' className={styles.root__input} type="text" />
-                    <input required {...register('password')} placeholder='Password' className={styles.root__input} type="text" />
+                    <input required {...register('password')} placeholder='Password' className={styles.root__input} type="password" />
                 </div>
-                <Snackbar open={message.length > 0}>
-                    <Alert
-                        severity={error ? "error" : "success"}
-                        action={
-                            <IconButton
-                                aria-label="close"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    setMessage('');
-                                }}
-                            >
-                                <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                        }
-                        sx={{ mb: 2 }}
-                    >
-                        {message}
-                    </Alert>
-                </Snackbar>
                 <Select placeholder="Gender" value={gender} onChange={changeSelect} className={styles.root__select} options={selectOptions} />
                 <AuthButton isLoading={isRegistrationLoading}>Send</AuthButton>
                 {!isRegistrationLoading && <Link className={styles.root__link} to="/login">Login</Link>}
