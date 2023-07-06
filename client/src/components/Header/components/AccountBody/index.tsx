@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AccountPopup from '../AccountPopup';
 
 import { useSelector } from 'react-redux';
-import { IRootState } from '../../../../../store';
+import { IRootState } from '../../../../store';
 
 import { chooseImageByGender } from '../../helpers/chooseImageByGender';
 

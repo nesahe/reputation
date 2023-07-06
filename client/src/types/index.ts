@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 export interface IUser {
     login: string,
     id: string,
@@ -12,4 +14,9 @@ export interface IProfile {
     _id: string,
     reputation: number,
     lastVoting: string
+}
+
+export type ItemRoute = {
+    path: string,
+    Component: FC
 }

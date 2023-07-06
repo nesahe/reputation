@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 
 import { chooseImageByGender } from '../../helpers/chooseImageByGender';
-import { getNickname } from '../../../../../helpers/getNickname';
+import { getNickname } from '../../helpers/getNickname';
 
 import styles from './index.module.scss'
-import { IProfile } from '../../../../../types';
+import { IProfile } from '../../../../types';
 
 interface AccountPopupProps {
     open: boolean,
