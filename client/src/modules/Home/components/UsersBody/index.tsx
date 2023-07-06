@@ -24,7 +24,7 @@ const UsersBody = () => {
 
     return (
         <div>
-            <UsersList users={data} />
+            <UsersList users={data || []} />
         </div>
     );
 };

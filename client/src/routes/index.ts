@@ -19,10 +19,6 @@ export const privateRoutesArr: ItemRoutes[] = [
 
 export const publicRoutesArr: ItemRoutes[] = [
     {
-        path: '/',
-        Component: LoginPage
-    },
-    {
         path: '/login',
         Component: LoginPage
     },

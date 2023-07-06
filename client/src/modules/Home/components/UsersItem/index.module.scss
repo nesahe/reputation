@@ -5,6 +5,11 @@
     background: rgb(260, 260, 260);
     border-radius: 15px;
     padding: 10px;
+
+    &__me {
+        background: rgb(226, 225, 225);
+    }
+
     &__profile__info {
         display: flex;
         align-items: center;

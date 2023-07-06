@@ -1,0 +1,36 @@
+.root {
+    &__account__popup {
+        position: absolute;
+        right: 0;
+        display: none;
+        border: 3px solid rgb(230, 230, 230);
+        border-top: 0;
+        padding: 10px;
+    }
+    &__account__popup.open {
+        display: block;
+    }
+    &__account__popup__body {
+        display: flex;
+        justify-content: space-between;
+        column-gap: 10px;
+        align-items: center;
+    }
+    &__account__panel__avatar {
+        img {
+            width: 45px;
+            height: 45px;
+        }
+    }
+    &__account__panel__nickname {
+        margin-bottom: 5px;
+    }
+    &__account__panel__button {
+        background: none;
+        border: 2px solid #0075ff;
+        text-transform: uppercase;
+        padding: 5px;
+        color: #0075ff;
+        font-weight: 600;
+    }
+}

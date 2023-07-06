@@ -4,7 +4,7 @@ const PublicRoute = () => {
 
     const auth = localStorage.getItem('jwt');
 
-    return !auth ? <Outlet /> : <Navigate to="/" />
+    return auth ? <Navigate to="/" /> : <Outlet />
 };
 
 export default PublicRoute;

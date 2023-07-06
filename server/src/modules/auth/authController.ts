@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 
-import { IRequestAuth } from "../../types";
-
 import authService from "./authService";
 
 import { logger } from "../../helpers/logging";
@@ -77,10 +75,20 @@ class AuthController {
     async getProfile(req: Request, res: Response) {
         try {
 
-            console.log('ky!');
+            const id = req.userId;
 
-        } catch (e) {
-            console.log(e);
+            if (id.length === 0) {
+                throw new Error('Error getting userId');
+            }
+
+            const user = await authService.getProfile(id);
+
+            return res.json({ user });
+
+        } catch (e: any) {
+            logger.error({ message: e.message })
+
+            return res.status(400).json({ message: e.message });
         }
     }
 }

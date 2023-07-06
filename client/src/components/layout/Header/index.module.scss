@@ -4,20 +4,17 @@
     left: 0;
     width: 100%;
     border-bottom: 3px solid rgb(230, 230, 230);
+    &__container {
+        position: relative;
+    }
+    &__logo img {
+        height: 30px;
+        width: 100px;
+    }
     &__body {
         display: flex;
         align-items: center;
         justify-content: space-between;
         min-height: 50px;
-    }
-    &__account_logo {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        background: #4056ca;
-    }
-    &__logo img {
-        height: 30px;
-        width: 100px;
     }
 }

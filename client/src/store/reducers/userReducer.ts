@@ -24,15 +24,12 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         addUser: (state, action: PayloadAction<IProfile>) => {
-
-        },
-        removeUser: (state) => {
-            state.user = defaultUser
+            state.user = action.payload;
         }
     }
 })
 
 
-export const { addUser, removeUser } = userSlice.actions
+export const { addUser } = userSlice.actions
 
 export default userSlice.reducer;

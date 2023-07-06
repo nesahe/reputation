@@ -1,6 +1,5 @@
 import { Response, Request, NextFunction } from "express";
 import tokenService from "../../../token/tokenService";
-import { IRequestAuth } from "../../../../types";
 
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
@@ -20,9 +19,11 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
 
         const userData = tokenService.validateAccessToken(token);
 
-        console.log(userData);
+        req.userId = userData || '';
+
+        next();
 
     } catch (e: any) {
-        res.status(400).json({ message: e.message });
+        res.status(401).json({ message: e.message });
     }
 }

@@ -84,6 +84,19 @@ class Service {
     }
 
     async getProfile(id: string) {
+        if (id.length === 0) {
+            throw new Error('Error getting userId');
+        }
+
+        const user = await User.findById(id);
+
+        if (!user) {
+            throw new Error('User not found')
+        }
+
+        const profile = new ProfileDto(user);
+
+        return profile;
 
     }
 

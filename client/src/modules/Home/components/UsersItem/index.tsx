@@ -11,6 +11,8 @@ import { chooseImageByGender } from './helpers/chooseImageByGender';
 import { getNickname } from './helpers/getNickname';
 
 import Like from './images/like.svg';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../../../store';
 
 interface IUsersItemProps {
     user: IUser,
@@ -21,8 +23,12 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index }) => {
 
     const nickname = getNickname(user.login);
 
+    const profile = useSelector((state: IRootState) => state.user.user);
+
+    const rootClasses = [styles.root, styles.root__me];
+
     return (
-        <div className={styles.root}>
+        <div className={profile._id === user.id ? rootClasses.join(' ') : styles.root}>
             <div className={styles.root__profile__info}>
                 <div className={styles.root__place}>
                     {index === 1

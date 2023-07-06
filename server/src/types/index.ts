@@ -1,5 +1,12 @@
 import { Schema } from "mongoose"
-import { Request } from "express"
+
+declare global {
+    namespace Express {
+        interface Request {
+            userId: string
+        }
+    }
+}
 
 export interface IUser {
     login: string,
@@ -24,8 +31,4 @@ export interface IReputationDto {
     id: string,
     gender: string,
     reputation: number
-}
-
-export interface IRequestAuth extends Request {
-    userId: string
 }

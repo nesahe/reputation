@@ -34,7 +34,7 @@ const Login = () => {
         if (isError) {
             setMessage(message);
         } else {
-            localStorage.setItem('jwt', accessToken);
+            localStorage.setItem('jwt', accessToken || '');
             window.location.reload();
         }
 
