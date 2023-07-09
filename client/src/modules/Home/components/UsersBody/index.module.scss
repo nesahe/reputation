@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+    &__top {
+        align-self: start;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        column-gap: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+}

@@ -16,10 +16,13 @@ import { IRootState } from '../../../../store';
 
 interface IUsersItemProps {
     user: IUser,
-    index: number
+    index: number,
+    activePage: number,
+    size: number,
+    sort: string
 }
 
-const UsersItem: FC<IUsersItemProps> = ({ user, index }) => {
+const UsersItem: FC<IUsersItemProps> = ({ user, index, activePage, size, sort }) => {
 
     const nickname = getNickname(user.login);
 
@@ -27,15 +30,17 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index }) => {
 
     const rootClasses = [styles.root, styles.root__me];
 
+    const placeIndex = index + (activePage - 1) * size;
+
     return (
         <div className={profile._id === user.id ? rootClasses.join(' ') : styles.root}>
             <div className={styles.root__profile__info}>
                 <div className={styles.root__place}>
-                    {index === 1
+                    {placeIndex === 1 && sort === 'reputation'
                         ? <div className={styles.root__place__crown}>
                             <img src={Crown} alt="crown" />
                         </div>
-                        : <span>{index}</span>
+                        : <span>{placeIndex}</span>
                     }
                 </div>
                 <div className={styles.root__photo}>

@@ -16,7 +16,12 @@ export interface IProfile {
     lastVoting: string
 }
 
-export type ItemRoute = {
+export interface ItemRoute {
     path: string,
     Component: FC
+}
+
+export interface ISelectOptionsItem {
+    label: string,
+    value: string
 }

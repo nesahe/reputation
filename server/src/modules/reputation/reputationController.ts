@@ -9,9 +9,11 @@ class Controller {
     async getUsers(req: Request, res: Response) {
         try {
 
-            const users = await reputationService.getUsers();
+            const { size, page, sort, search } = req.query as { size: string, page: string, sort: string, search: string };
 
-            return res.json({ users });
+            const { users, length } = await reputationService.getUsers(+size, +page, sort, search);
+
+            return res.json({ users, length });
 
         } catch (e: any) {
             logger.error({ message: e.message })

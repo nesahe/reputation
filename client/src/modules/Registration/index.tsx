@@ -17,12 +17,9 @@ import { registrationUser } from './api/registrationUser';
 
 import { checkEmailAuth } from './helpers/checkEmailAuth';
 
-import './index.scss';
+import { ISelectOptionsItem } from '../../types';
 
-interface ISelectOptionsItem {
-    label: string,
-    value: string
-}
+import './index.scss';
 
 const selectOptions: ISelectOptionsItem[] = [
     {

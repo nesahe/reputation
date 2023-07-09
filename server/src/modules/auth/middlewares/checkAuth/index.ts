@@ -14,6 +14,7 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
         const token = authorizationHeader.split(' ')[1];
 
         if (!token) {
+            console.log('ok');
             throw new Error('Access token not found');
         }
 

@@ -1,0 +1,15 @@
+.root {
+    padding-top: 30px;
+    img {
+        animation: loader 3s 0s infinite linear;
+    }
+}
+
+@keyframes loader {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

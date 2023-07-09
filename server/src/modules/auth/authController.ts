@@ -11,7 +11,7 @@ class AuthController {
         try {
 
             const { login, password } = req.query as { login: string, password: string }
-            const { accessToken, refreshToken, user } = await authService.login(login, password);
+            const { accessToken, refreshToken, user } = await authService.login(login.toLowerCase(), password);
 
             res.cookie('refreshToken', refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
@@ -29,7 +29,7 @@ class AuthController {
 
             const { login, password, gender } = req.query as { login: string, password: string, gender: string }
 
-            await authService.registration(login, password, gender);
+            await authService.registration(login.toLowerCase(), password, gender);
 
             return res.json({ message: 'Registration is successful' })
 
