@@ -1,0 +1,12 @@
+.root {
+    background: rgb(245, 244, 244);
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;
+    &__title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+}

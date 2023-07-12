@@ -6,7 +6,7 @@ import { IUser } from "../../../../types";
 
 interface IFetchUsersResponse {
     users: IUser[],
-    length: string
+    length: string,
 }
 
 const jwt = localStorage.getItem('jwt');
@@ -15,7 +15,7 @@ export const fetchUsers = async (pageSize: string, page: string, sort: string, s
 
     const { data } = await axios.get<IFetchUsersResponse>(`${API_PATHS.fetchUsers}?size=${pageSize}&page=${page}&sort=${sort}&search=${search}`, {
         headers: {
-            authorization: `Bearer + ${jwt}`
+            authorization: `Bearer ${jwt}`
         }
     });
     return data

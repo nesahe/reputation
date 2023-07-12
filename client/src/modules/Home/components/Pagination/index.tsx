@@ -12,6 +12,10 @@ const Pagination: FC<PaginationProps> = ({ size, activePage, setActivePage }) =>
 
     const rootClasses = [styles.root__item, styles.root__item_active];
 
+    if (size.length < 2) {
+        return <></>
+    }
+
     return (
         <div className={styles.root}>
             {size.map(i =>

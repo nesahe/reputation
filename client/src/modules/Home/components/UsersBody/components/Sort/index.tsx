@@ -15,18 +15,23 @@ const options = [
         value: 'reputation'
     },
     {
-        label: 'By nickname',
+        label: 'By login',
         value: 'login'
     }
 ]
 
 interface SortProps {
     value: SingleValue<ISelectOptionsItem> | undefined,
-    onChange: (sort: SingleValue<ISelectOptionsItem>) => void,
+    onChange: (sort: SingleValue<ISelectOptionsItem> | undefined) => void
 }
 
 const Sort: FC<SortProps> = ({ value, onChange }) => {
-    return <Select value={value} onChange={onChange} className={styles.root} options={options} placeholder="Sorting..." />
+
+    const onChangeSelect = (sort: SingleValue<ISelectOptionsItem>) => {
+        onChange(sort);
+    }
+
+    return <Select value={value} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sorting..." />
 };
 
 export default Sort;

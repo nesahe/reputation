@@ -6,6 +6,8 @@ import UsersItem from '../UsersItem';
 
 import styles from './index.module.scss';
 
+import UsersListBody from '../UsersListBody';
+
 interface IUsersList {
     users: IUser[],
     activePage: number,
@@ -16,13 +18,14 @@ interface IUsersList {
 const UsersList: FC<IUsersList> = ({ users, activePage, size, sort }) => {
 
     return (
-        <div className={styles.root}>
-            <h3 className={styles.root__title}>{users.length === 0 ? 'Users Not Found' : 'Reputation Top'}</h3>
-            {users.map((user, index) =>
-                <UsersItem sort={sort} activePage={activePage} size={size} user={user} index={index + 1} key={user.id} />
-            )}
-        </div>
-    );
+        <UsersListBody title={users.length === 0 ? 'Users Not Found' : 'Reputation Top'}>
+            <div className={styles.root}>
+                {users.map((user, index) =>
+                    <UsersItem sort={sort} activePage={activePage} size={size} user={user} index={index + 1} key={user.id} />
+                )}
+            </div>
+        </UsersListBody>
+    )
 };
 
 export default UsersList;

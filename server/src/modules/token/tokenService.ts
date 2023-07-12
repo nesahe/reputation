@@ -42,10 +42,11 @@ class TokenService {
         try {
 
             const { user } = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '') as IPayloadJwt
+
             return user
 
-        } catch (e) {
-            console.log(e);
+        } catch (e: any) {
+            throw new Error(e.message);
         }
     }
 }

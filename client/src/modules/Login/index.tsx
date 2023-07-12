@@ -31,7 +31,7 @@ const Login = () => {
 
     const [loginForm, setLoginForm] = useState<ILoginForm>({ login: '', password: '' });
 
-    const [loginFetch, isLoginLoading, loginError] = useFetching(async () => {
+    const [loginFetch, isLoginLoading] = useFetching(async () => {
         const { isError, message, accessToken } = await loginUser(loginForm);
         if (isError) {
             setMessage(message);
