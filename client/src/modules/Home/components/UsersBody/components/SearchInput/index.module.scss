@@ -1,9 +1,15 @@
 .root {
     flex: 0 1 80%;
     position: relative;
+    @media (max-width: 630px) {
+        width: 100%;
+    }
     &__input {
         border: 2px solid rgb(240, 240, 240);
         border-radius: 0 10px 10px 0;
+        @media (max-width: 630px) {
+            border-radius: 10px;
+        }
         line-height: 34px;
         padding: 0 5px;
         width: 100%;

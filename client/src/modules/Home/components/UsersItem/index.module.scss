@@ -5,6 +5,11 @@
     background: rgb(260, 260, 260);
     border-radius: 15px;
     padding: 10px;
+    @media (max-width: 500px) {
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px 65px;
+    }
 
     &__me {
         background: rgb(226, 225, 225);
@@ -13,28 +18,57 @@
     &__profile__info {
         display: flex;
         align-items: center;
-        flex: 0 1 80%;
         padding-right: 20px;
+        flex: 0 1 80%;
+        @media (max-width: 500px) {
+            flex-direction: column;
+            padding-right: 0;
+            margin-bottom: 10px;
+        }
     }
     &__photo img {
         width: 50px;
         height: 50px;
     }
-    &__place__crown img {
-        width: 30px;
-        height: 30px;
+    &__place__crown {
+        img {
+            width: 30px;
+            height: 30px;
+        }
     }
     &__place {
         flex: 0 1 20%;
-    }
-    &__place span {
-        margin-left: 10px;
+        @media (max-width: 500px) {
+            margin-bottom: 10px;
+        }
+        span {
+            margin-left: 10px;
+            @media (max-width: 500px) {
+                margin-left: 0;
+                font-weight: 600;
+                font-size: 20px;
+            }
+        }
     }
     &__photo {
         flex: 0 1 40%;
+        @media (max-width: 500px) {
+            margin-bottom: 10px;
+        }
+        img {
+            width: 50px;
+            height: 50px;
+            @media (max-width: 500px) {
+                width: 100px;
+                height: 100px;
+            }
+        }
     }
     &__name {
         flex: 0 1 40%;
+        @media (max-width: 500px) {
+            font-size: 20px;
+        }
     }
     &__reputation {
         display: flex;
@@ -42,6 +76,9 @@
         column-gap: 20px;
         align-items: center;
         flex: 0 1 20%;
+        @media (max-width: 500px) {
+            column-gap: 10px;
+        }
     }
     &__reputation__button {
         background: none;

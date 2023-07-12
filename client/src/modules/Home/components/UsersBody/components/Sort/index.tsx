@@ -31,7 +31,7 @@ const Sort: FC<SortProps> = ({ value, onChange }) => {
         onChange(sort);
     }
 
-    return <Select value={value} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sorting..." />
+    return <Select value={value} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sort..." />
 };
 
 export default Sort;
