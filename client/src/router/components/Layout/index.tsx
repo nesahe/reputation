@@ -22,8 +22,10 @@ const Layout = () => {
         }
     })
 
+    const auth = localStorage.getItem('jwt');
+
     useEffect(() => {
-        fetchMyProfile();
+        auth && fetchMyProfile();
     }, [])
 
     return isProfileLoading ? <Loader /> : <Outlet />

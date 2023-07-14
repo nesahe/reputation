@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 
 import cookieParser from 'cookie-parser';
 
+import { errorMiddleware } from './middlewares/errorMiddleware';
+
 import router from './router';
 
 import cors from 'cors';
@@ -21,6 +23,7 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 app.use(cookieParser());
 app.use(cors());
 app.use('/api', router);
+app.use(errorMiddleware);
 
 const start = async () => {
     try {

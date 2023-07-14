@@ -10,6 +10,9 @@ import UserDto from "./userDto";
 import ProfileDto from "./profileDto";
 
 import { checkEmailAuth } from "./helpers/checkEmailAuth";
+import { checkGender } from "./helpers/checkGender";
+
+import ApiError from "../../exceptions/ApiError";
 
 class Service {
 
@@ -17,17 +20,22 @@ class Service {
         const candidate = await User.findOne({ login: email });
 
         const resultValidationEmail = checkEmailAuth(email);
+        const resultValidationGender = checkGender(gender);
+
+        if (!resultValidationGender) {
+            throw ApiError.badRequest('Please user the correct gender');
+        }
 
         if (!resultValidationEmail) {
-            throw new Error('Please use the correct email address')
+            throw ApiError.badRequest('Please use the correct email address')
         }
 
         if (password.length < 8) {
-            throw new Error(`Password can't be smaller than 8 symbols`)
+            throw ApiError.badRequest(`Password can't be smaller than 8 symbols`)
         }
 
         if (candidate) {
-            throw new Error(`A user with ${email} address already exists`);
+            throw ApiError.badRequest(`A user with ${email} address already exists`);
         }
 
         const hashPassword = await bcrypt.hash(password, 7);
@@ -43,7 +51,7 @@ class Service {
         const userDto = new UserDto(user);
 
         if (!userDto.id) {
-            throw new Error('Unexpected error')
+            throw new ApiError(500, 'Unexpected error');
         }
     }
 
@@ -51,22 +59,20 @@ class Service {
         const candidate = await User.findOne({ login });
 
         if (!candidate) {
-            throw new Error(`A user with ${login} address not found`);
+            throw ApiError.badRequest(`A user with ${login} address not found`);
         }
 
         const identifyPassword = bcrypt.compareSync(password, candidate.password);
 
         if (!identifyPassword) {
-            throw new Error('Invalid password')
+            throw ApiError.badRequest('Invalid password')
         }
 
         const { accessToken, refreshToken } = tokenService.generateTokens({ user: candidate._id });
 
         await tokenService.saveToken(candidate._id, refreshToken);
 
-        const profile = new ProfileDto(candidate);
-
-        return { accessToken, refreshToken, user: profile };
+        return { accessToken, refreshToken };
     }
 
     async activateAccount(activationLink: string) {
@@ -74,7 +80,7 @@ class Service {
         const candidate = await User.findOne({ activationLink });
 
         if (!candidate) {
-            throw new Error('Activation error. User not found');
+            throw ApiError.badRequest('Activation error. User not found');
         }
 
         candidate.isActivated = true;
@@ -85,19 +91,24 @@ class Service {
 
     async getProfile(id: string) {
         if (id.length === 0) {
-            throw new Error('Error getting userId');
+            throw ApiError.badRequest('Error getting userId');
         }
 
         const user = await User.findById(id);
 
         if (!user) {
-            throw new Error('User not found')
+            throw ApiError.badRequest('User not found')
         }
 
         const profile = new ProfileDto(user);
 
         return profile;
 
+    }
+
+    async logout(refreshToken: string) {
+        const result = await tokenService.removeRefreshToken(refreshToken);
+        return result
     }
 
 }

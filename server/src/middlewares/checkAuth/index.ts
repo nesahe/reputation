@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import tokenService from "../../../token/tokenService";
+import tokenService from "../../modules/token/tokenService";
 
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,6 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
         const token = authorizationHeader.split(' ')[1];
 
         if (!token) {
-            console.log('ok');
             throw new Error('Access token not found');
         }
 

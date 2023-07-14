@@ -39,15 +39,13 @@ class TokenService {
     }
 
     validateAccessToken(token: string) {
-        try {
+        const { user } = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '') as IPayloadJwt
+        return user
+    }
 
-            const { user } = jwt.verify(token, process.env.JWT_ACCESS_SECRET || '') as IPayloadJwt
-
-            return user
-
-        } catch (e: any) {
-            throw new Error(e.message);
-        }
+    async removeRefreshToken(refreshToken: string) {
+        const result = await Token.deleteOne({ refreshToken });
+        return result.deletedCount > 0
     }
 }
 

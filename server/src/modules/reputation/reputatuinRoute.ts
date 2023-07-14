@@ -1,6 +1,6 @@
 import { Router } from "express";
 import controller from './reputationController';
-import { checkAuth } from "../auth/middlewares/checkAuth";
+import { checkAuth } from "../../middlewares/checkAuth";
 
 const router = Router();
 

@@ -6,7 +6,8 @@ const API_PATHS = {
     fetchUsers: `${API_URL}/reputation`,
     fetchProfile: `${API_URL}/auth/profile`,
     likeUser: `${API_URL}/reputation/like`,
-    unLikeUser: `${API_URL}/reputation/unlike`
+    unLikeUser: `${API_URL}/reputation/unlike`,
+    logoutUser: `${API_URL}/auth/logout`,
 }
 
 

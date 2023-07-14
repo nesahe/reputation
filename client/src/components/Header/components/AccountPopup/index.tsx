@@ -3,6 +3,8 @@ import React, { FC } from 'react';
 import { chooseImageByGender } from '../../helpers/chooseImageByGender';
 import { getNickname } from '../../helpers/getNickname';
 
+import { logoutUser } from '../../api/logoutUser';
+
 import styles from './index.module.scss'
 import { IProfile } from '../../../../types';
 
@@ -19,7 +21,7 @@ const AccountPopup: FC<AccountPopupProps> = ({ open, user }) => {
 
     const nickname = getNickname(user.login)
 
-    const unlogin = () => {
+    const unLogin = async () => {
         localStorage.removeItem('jwt');
         document.location.reload();
     }
@@ -32,7 +34,7 @@ const AccountPopup: FC<AccountPopupProps> = ({ open, user }) => {
                 </div>
                 <div className={styles.root__account__panel__info}>
                     <div className={styles.root__account__panel__nickname}>{nickname}</div>
-                    <button onClick={unlogin} className={styles.root__account__panel__button}>unlogin</button>
+                    <button onClick={unLogin} className={styles.root__account__panel__button}>unlogin</button>
                 </div>
             </div>
         </div>

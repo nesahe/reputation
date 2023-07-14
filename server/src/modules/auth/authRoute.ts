@@ -1,7 +1,7 @@
-import { Router, RequestHandler } from "express";
+import { Router } from "express";
 import controller from './authController.ts'
 
-import { checkAuth } from "./middlewares/checkAuth/index.ts";
+import { checkAuth } from "../../middlewares/checkAuth/index.ts";
 
 const router = Router();
 

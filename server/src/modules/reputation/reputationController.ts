@@ -1,12 +1,10 @@
-import { Request, Response } from "express";
-
-import { logger } from "../../helpers/logging";
+import { Request, Response, NextFunction } from "express";
 
 import reputationService from "./reputationService";
 
 class Controller {
 
-    async getUsers(req: Request, res: Response) {
+    async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { size, page, sort, search } = req.query as { size: string, page: string, sort: string, search: string };
@@ -15,14 +13,12 @@ class Controller {
 
             return res.json({ users, length });
 
-        } catch (e: any) {
-            logger.error({ message: e.message })
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 
-    async likeUser(req: Request, res: Response) {
+    async likeUser(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { user } = req.query as { user: string }
@@ -31,24 +27,18 @@ class Controller {
 
             res.status(400).json({ message: 'sss' })
 
-        } catch (e: any) {
-            logger.error({ message: e.message });
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 
-    async unLikeUser(req: Request, res: Response) {
+    async unLikeUser(req: Request, res: Response, next: NextFunction) {
         try {
 
             const { user } = req.query as { user: string }
 
-            console.log(user);
-
-        } catch (e: any) {
-
-            logger.error({ message: e.message });
-            res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 

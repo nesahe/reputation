@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import authService from "./authService";
-
-import { logger } from "../../helpers/logging";
+import ApiError from "../../exceptions/ApiError";
 
 import { CLIENT_URL } from "../../constants";
 
@@ -11,16 +10,14 @@ class AuthController {
         try {
 
             const { login, password } = req.query as { login: string, password: string }
-            const { accessToken, refreshToken, user } = await authService.login(login.toLowerCase(), password);
+            const { accessToken, refreshToken } = await authService.login(login.toLowerCase(), password);
 
             res.cookie('refreshToken', refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
             return res.json({ accessToken, message: 'Login Successful' });
 
-        } catch (e: any) {
-            logger.error({ message: e.message })
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -33,18 +30,31 @@ class AuthController {
 
             return res.json({ message: 'Registration is successful' })
 
-        } catch (e: any) {
-            logger.error({ message: e.message })
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 
     async logout(req: Request, res: Response, next: NextFunction) {
         try {
 
+            const { refreshToken } = req.cookies as { refreshToken: string };
+
+            if (!refreshToken) {
+                throw ApiError.badRequest('Cookie not found');
+            }
+
+            const result = await authService.logout(refreshToken);
+
+            if (result) {
+                res.clearCookie('refreshToken');
+                return res.json({ message: result });
+            }
+
+            throw ApiError.badRequest('Refresh token not found');
+
         } catch (e) {
-            console.log(e)
+            next(e);
         }
     }
 
@@ -55,12 +65,10 @@ class AuthController {
 
             await authService.activateAccount(link);
 
-            res.redirect(`${CLIENT_URL}/registration`);
+            res.redirect(`${CLIENT_URL}/login`);
 
-        } catch (e: any) {
-            logger.error({ message: e.message })
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -68,27 +76,25 @@ class AuthController {
         try {
 
         } catch (e) {
-            console.log(e)
+            next(e);
         }
     }
 
-    async getProfile(req: Request, res: Response) {
+    async getProfile(req: Request, res: Response, next: NextFunction) {
         try {
 
             const id = req.userId;
 
             if (id.length === 0) {
-                throw new Error('Error getting userId');
+                throw ApiError.badRequest('Error getting userId');
             }
 
             const user = await authService.getProfile(id);
 
             return res.json({ user });
 
-        } catch (e: any) {
-            logger.error({ message: e.message })
-
-            return res.status(400).json({ message: e.message });
+        } catch (e) {
+            next(e);
         }
     }
 }
