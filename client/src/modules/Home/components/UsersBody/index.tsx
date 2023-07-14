@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import styles from './index.module.scss';
 
-import { SingleValue } from 'react-select';
-import { ISelectOptionsItem } from '../../../../types';
+import { changeFilters } from '../../../../store/reducers/filtersReducer';
 
 import { AxiosError } from 'axios';
 
@@ -14,25 +13,34 @@ import Sort from './components/Sort';
 import SearchInput from './components/SearchInput';
 import UsersListBody from '../UsersListBody';
 import ErrorMessageBody from './components/ErrorMessageBody';
+import ClearFilters from './components/ClearFilters';
 
 import qs from 'qs';
+
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../../../store';
 
 import { useQuery } from 'react-query';
 
 import { fetchUsers } from '../../api/fetchUsers';
 
 import { getPaginationItemCount } from '../../helpers/getPaginationItemCount';
+import { getPaginationSlice } from '../../helpers/getPaginationSlice';
+
 import { useNavigate } from 'react-router-dom';
 
 
 const UsersBody = () => {
 
-    const [activePage, setActivePage] = useState<number>(1);
-    const [activeSort, setActiveSort] = useState<SingleValue<ISelectOptionsItem>>();
+    const dispatch = useAppDispatch();
+
+    const { activeSort, search } = useSelector((state: IRootState) => state.filters);
+    const { activePage } = useSelector((state: IRootState) => state.page);
+
+    console.log(search);
 
     const isMounted = useRef(false);
-
-    const [search, setSearch] = useState<string>('');
 
     const pageSize = 3;
 
@@ -43,13 +51,13 @@ const UsersBody = () => {
 
     const navigate = useNavigate();
 
-    const errorBody = error as AxiosError
+    const errorBody = error as AxiosError;
+
 
     useEffect(() => {
         if (window.location.search && !isMounted.current) {
             const { search, sort } = qs.parse(window.location.search.substring(1)) as { search: string, sort: string }
-            setSearch(search);
-            setActiveSort({ value: sort, label: `By ${sort}` });
+            dispatch(changeFilters({ search: search, sort: { value: sort, label: `By ${sort}` } }))
         }
     }, [])
 
@@ -60,7 +68,9 @@ const UsersBody = () => {
                 sort: activeSort?.value
             });
 
-            navigate(`?${queryParams}`);
+            if (search || activeSort?.value) {
+                navigate(`?${queryParams}`);
+            }
         }
 
         isMounted.current = true;
@@ -84,16 +94,19 @@ const UsersBody = () => {
         )
     }
 
-    const paginationItemsArr = getPaginationItemCount(+data.length / pageSize);
+    const fullPaginationItemsArr = getPaginationItemCount(+data.length / pageSize);
+    // const slicePaginationItemsArr = getPaginationSlice(fullPaginationItemsArr, activePage);
+
 
     return (
         <div className={styles.root}>
             <div className={styles.root__top}>
-                <Sort value={activeSort} onChange={setActiveSort} />
-                <SearchInput search={search} setActivePage={setActivePage} onChange={setSearch} />
+                <ClearFilters />
+                <Sort />
+                <SearchInput />
             </div>
             <UsersList sort={activeSort?.value || ''} activePage={activePage} size={pageSize} users={data.users} />
-            <Pagination activePage={activePage} setActivePage={setActivePage} size={paginationItemsArr} />
+            <Pagination length={fullPaginationItemsArr.length} size={fullPaginationItemsArr} />
         </div>
     );
 };

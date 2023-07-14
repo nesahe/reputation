@@ -5,5 +5,7 @@ import { checkAuth } from "../auth/middlewares/checkAuth";
 const router = Router();
 
 router.get('/', checkAuth, controller.getUsers);
+router.post('/like', checkAuth, controller.likeUser);
+router.post('/unlike', checkAuth, controller.unLikeUser);
 
 export default router;

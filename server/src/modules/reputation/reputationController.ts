@@ -22,6 +22,36 @@ class Controller {
         }
     }
 
+    async likeUser(req: Request, res: Response) {
+        try {
+
+            const { user } = req.query as { user: string }
+
+            console.log(user);
+
+            res.status(400).json({ message: 'sss' })
+
+        } catch (e: any) {
+            logger.error({ message: e.message });
+
+            return res.status(400).json({ message: e.message });
+        }
+    }
+
+    async unLikeUser(req: Request, res: Response) {
+        try {
+
+            const { user } = req.query as { user: string }
+
+            console.log(user);
+
+        } catch (e: any) {
+
+            logger.error({ message: e.message });
+            res.status(400).json({ message: e.message });
+        }
+    }
+
 }
 
 

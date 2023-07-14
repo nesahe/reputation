@@ -82,5 +82,9 @@
     }
     &__reputation__button {
         background: none;
+        img {
+            width: 30px;
+            height: 30px;
+        }
     }
 }

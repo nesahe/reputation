@@ -1,4 +1,11 @@
-import React, { FC, useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../../../../../store';
+import { useAppDispatch } from '../../../../../../hooks/useAppDispatch';
+import { changeFilters } from '../../../../../../store/reducers/filtersReducer';
+import { changePage } from '../../../../../../store/reducers/pageReducer';
+import { clearSearch } from '../../../../../../store/reducers/filtersReducer';
 
 import debounce from 'lodash.debounce';
 
@@ -6,32 +13,26 @@ import styles from './index.module.scss';
 
 import Close from './images/close.svg';
 
-interface SearchInputProps {
-    onChange: (value: string) => void,
-    setActivePage: (page: number) => void,
-    search: string
-}
 
-const SearchInput: FC<SearchInputProps> = ({ onChange, setActivePage, search }) => {
+const SearchInput = () => {
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const isMounted = useRef(false);
+
+    const { search } = useSelector((state: IRootState) => state.filters);
+
+    const dispatch = useAppDispatch();
 
     const [value, setValue] = useState<string>('');
 
     useEffect(() => {
-        if (!isMounted.current) {
-            setValue(search);
-        }
-
-        isMounted.current = true
-    }, [])
+        setValue(search);
+    }, [search])
 
 
     const updateSearch = useCallback(
         debounce((str) => {
-            setActivePage(1);
-            onChange(str);
+            dispatch(changePage({ page: 1 }))
+            str ? dispatch(changeFilters({ search: str })) : dispatch(clearSearch());
         }, 500)
         , []
     )

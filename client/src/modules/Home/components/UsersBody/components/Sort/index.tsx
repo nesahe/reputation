@@ -1,9 +1,15 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 import styles from './index.module.scss';
 
+import { useAppDispatch } from '../../../../../../hooks/useAppDispatch';
+import { changeFilters } from '../../../../../../store/reducers/filtersReducer';
+
 import { SingleValue } from 'react-select';
 import { ISelectOptionsItem } from '../../../../../../types';
+
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../../../../../store';
 
 import Select from 'react-select';
 
@@ -20,18 +26,18 @@ const options = [
     }
 ]
 
-interface SortProps {
-    value: SingleValue<ISelectOptionsItem> | undefined,
-    onChange: (sort: SingleValue<ISelectOptionsItem> | undefined) => void
-}
 
-const Sort: FC<SortProps> = ({ value, onChange }) => {
+const Sort = () => {
+
+    const dispatch = useAppDispatch();
+
+    const { activeSort } = useSelector((state: IRootState) => state.filters)
 
     const onChangeSelect = (sort: SingleValue<ISelectOptionsItem>) => {
-        onChange(sort);
+        dispatch(changeFilters({ sort: sort }))
     }
 
-    return <Select value={value} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sort..." />
+    return <Select value={activeSort} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sort..." />
 };
 
 export default Sort;

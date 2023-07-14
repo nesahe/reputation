@@ -1,18 +1,25 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 import styles from './index.module.scss';
 
 import { IUser } from '../../../../types';
 
-import Crown from './images/crown.svg';
-
 import { chooseImageByGender } from './helpers/chooseImageByGender';
-
 import { getNickname } from './helpers/getNickname';
 
+import { fetchActivityReputation } from '../../api/fetchActivityReputation';
+
+import { useFetching } from '../../../../hooks/useFetching';
+
+import Crown from './images/crown.svg';
 import Like from './images/like.svg';
+import ActiveLike from './images/active-like.svg';
+
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../store';
+
+import ErrorMessage from '../UsersBody/components/ErrorMessage';
+
 
 interface IUsersItemProps {
     user: IUser,
@@ -24,6 +31,10 @@ interface IUsersItemProps {
 
 const UsersItem: FC<IUsersItemProps> = ({ user, index, activePage, size, sort }) => {
 
+    const [reputation, setReputation] = useState<number>(user.reputation)
+    const [isLiked, setIsLiked] = useState<boolean>(false);
+    const [messageError, setMessageError] = useState<string>('');
+
     const nickname = getNickname(user.login);
 
     const profile = useSelector((state: IRootState) => state.user.user);
@@ -32,8 +43,21 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index, activePage, size, sort })
 
     const placeIndex = index + (activePage - 1) * size;
 
+    const [fetchActivitingReputation, isActivitingReputationLoading] = useFetching(async () => {
+        const { isError, message } = await fetchActivityReputation(isLiked, user.id);
+        isError && setMessageError(message);
+    })
+
+    const activityUser = () => {
+        setIsLiked(!isLiked);
+        setReputation(isLiked ? reputation - 1 : reputation + 1);
+        fetchActivitingReputation();
+    }
+
+
     return (
         <div className={profile._id === user.id ? rootClasses.join(' ') : styles.root}>
+            <ErrorMessage message={messageError} setMessage={setMessageError} />
             <div className={styles.root__profile__info}>
                 <div className={styles.root__place}>
                     {placeIndex === 1 && sort === 'reputation'
@@ -49,10 +73,12 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index, activePage, size, sort })
                 <div className={styles.root__name}>{nickname}</div>
             </div>
             <div className={styles.root__reputation}>
-                <button className={styles.root__reputation__button}>
-                    <img src={Like} alt="like" />
-                </button>
-                <div className={styles.root__reputation__counter}>{user.reputation}</div>
+                {profile.login !== user.login &&
+                    <button disabled={isActivitingReputationLoading} onClick={activityUser} className={styles.root__reputation__button}>
+                        <img src={isLiked ? ActiveLike : Like} alt="like" />
+                    </button>
+                }
+                <div className={styles.root__reputation__counter}>{reputation}</div>
             </div>
         </div>
     );

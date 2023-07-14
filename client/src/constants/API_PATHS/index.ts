@@ -4,7 +4,9 @@ const API_PATHS = {
     registration: `${API_URL}/auth/registration`,
     login: `${API_URL}/auth/login`,
     fetchUsers: `${API_URL}/reputation`,
-    fetchProfile: `${API_URL}/auth/profile`
+    fetchProfile: `${API_URL}/auth/profile`,
+    likeUser: `${API_URL}/reputation/like`,
+    unLikeUser: `${API_URL}/reputation/unlike`
 }
 
 
