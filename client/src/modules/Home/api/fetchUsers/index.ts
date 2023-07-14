@@ -11,12 +11,14 @@ interface IFetchUsersResponse {
 
 const jwt = localStorage.getItem('jwt');
 
-export const fetchUsers = async (pageSize: string, page: string, sort: string, search: string) => {
+export const fetchUsers = async (isSearch: boolean, pageSize: string, page: string, sort: string, search: string) => {
 
-    const { data } = await axios.get<IFetchUsersResponse>(`${API_PATHS.fetchUsers}?size=${pageSize}&page=${page}&sort=${sort}&search=${search}`, {
-        headers: {
-            authorization: `Bearer ${jwt}`
-        }
-    });
-    return data
+    if (!search) {
+        const { data } = await axios.get<IFetchUsersResponse>(`${API_PATHS.fetchUsers}?size=${pageSize}&page=${page}&sort=${sort}&search=${search}`, {
+            headers: {
+                authorization: `Bearer ${jwt}`
+            }
+        });
+        return data
+    }
 }
