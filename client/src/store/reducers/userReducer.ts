@@ -23,13 +23,13 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        addUser: (state, action: PayloadAction<IProfile>) => {
+        addUserAction: (state, action: PayloadAction<IProfile>) => {
             state.user = action.payload;
         }
     }
 })
 
 
-export const { addUser } = userSlice.actions
+export const { addUserAction } = userSlice.actions
 
 export default userSlice.reducer;

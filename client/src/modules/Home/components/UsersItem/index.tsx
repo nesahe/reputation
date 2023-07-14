@@ -18,7 +18,7 @@ import ActiveLike from './images/active-like.svg';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../store';
 
-import ErrorMessage from '../UsersBody/components/ErrorMessage';
+import ErrorMessage from '../ErrorMessage';
 
 
 interface IUsersItemProps {

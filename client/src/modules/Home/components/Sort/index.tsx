@@ -2,14 +2,14 @@ import React from 'react';
 
 import styles from './index.module.scss';
 
-import { useAppDispatch } from '../../../../../../hooks/useAppDispatch';
-import { changeFilters } from '../../../../../../store/reducers/filtersReducer';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { changeFiltersAction } from '../../../../store/reducers/filtersReducer';
 
 import { SingleValue } from 'react-select';
-import { ISelectOptionsItem } from '../../../../../../types';
+import { ISelectOptionsItem } from '../../../../types';
 
 import { useSelector } from 'react-redux';
-import { IRootState } from '../../../../../../store';
+import { IRootState } from '../../../../store';
 
 import Select from 'react-select';
 
@@ -34,7 +34,7 @@ const Sort = () => {
     const { activeSort } = useSelector((state: IRootState) => state.filters)
 
     const onChangeSelect = (sort: SingleValue<ISelectOptionsItem>) => {
-        dispatch(changeFilters({ sort: sort }))
+        dispatch(changeFiltersAction({ sort: sort }))
     }
 
     return <Select value={activeSort} onChange={onChangeSelect} className={styles.root} options={options} placeholder="Sort..." />

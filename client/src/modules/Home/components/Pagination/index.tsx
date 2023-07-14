@@ -4,7 +4,7 @@ import ArrowLeft from './images/arrow-left.svg';
 import ArrowRight from './images/arrow-right.svg';
 import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
-import { changePage } from '../../../../store/reducers/pageReducer';
+import { changePageAction } from '../../../../store/reducers/pageReducer';
 
 import styles from './index.module.scss';
 import { IRootState } from '../../../../store';
@@ -29,17 +29,17 @@ const Pagination: FC<PaginationProps> = ({ size, length }) => {
     return (
         <div className={styles.root}>
             {activePage > 1 &&
-                <div onClick={() => dispatch(changePage({ page: activePage - 1 }))} className={styles.root__arrow}>
+                <div onClick={() => dispatch(changePageAction({ page: activePage - 1 }))} className={styles.root__arrow}>
                     <img src={ArrowLeft} alt="arrow-back" />
                 </div>
             }
             <div className={styles.root__body}>
                 {size.map(i =>
-                    <div onClick={() => dispatch(changePage({ page: +i }))} className={+i === activePage ? rootClasses.join(' ') : styles.root__item} key={i}>{i}</div>
+                    <div onClick={() => dispatch(changePageAction({ page: +i }))} className={+i === activePage ? rootClasses.join(' ') : styles.root__item} key={i}>{i}</div>
                 )}
             </div>
             {activePage !== length &&
-                <div onClick={() => dispatch(changePage({ page: activePage + 1 }))} className={styles.root__arrow}>
+                <div onClick={() => dispatch(changePageAction({ page: activePage + 1 }))} className={styles.root__arrow}>
                     <img src={ArrowRight} alt="arrow-next" />
                 </div>
             }

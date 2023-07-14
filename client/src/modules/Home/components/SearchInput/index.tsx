@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
-import { IRootState } from '../../../../../../store';
-import { useAppDispatch } from '../../../../../../hooks/useAppDispatch';
-import { changeFilters } from '../../../../../../store/reducers/filtersReducer';
-import { changePage } from '../../../../../../store/reducers/pageReducer';
-import { clearSearch } from '../../../../../../store/reducers/filtersReducer';
+import { IRootState } from '../../../../store';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { changeFiltersAction } from '../../../../store/reducers/filtersReducer';
+import { changePageAction } from '../../../../store/reducers/pageReducer';
+import { clearSearchAction } from '../../../../store/reducers/filtersReducer';
 
 import debounce from 'lodash.debounce';
 
@@ -31,8 +31,8 @@ const SearchInput = () => {
 
     const updateSearch = useCallback(
         debounce((str) => {
-            dispatch(changePage({ page: 1 }))
-            str ? dispatch(changeFilters({ search: str })) : dispatch(clearSearch());
+            dispatch(changePageAction({ page: 1 }))
+            str ? dispatch(changeFiltersAction({ search: str })) : dispatch(clearSearchAction());
         }, 500)
         , []
     )

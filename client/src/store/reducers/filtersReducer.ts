@@ -18,7 +18,7 @@ const filtersReducer = createSlice({
     name: 'filters',
     initialState,
     reducers: {
-        changeFilters: (state, action: PayloadAction<{ search?: string, sort?: SingleValue<ISelectOptionsItem> }>) => {
+        changeFiltersAction: (state, action: PayloadAction<{ search?: string, sort?: SingleValue<ISelectOptionsItem> }>) => {
             const { sort, search } = action.payload;
             if (search) {
                 state.search = search;
@@ -27,15 +27,15 @@ const filtersReducer = createSlice({
                 state.activeSort = sort;
             }
         },
-        removeFilters: (state) => {
+        removeFiltersAction: (state) => {
             state.search = '';
             state.activeSort = null;
         },
-        clearSearch: (state) => {
+        clearSearchAction: (state) => {
             state.search = ''
         }
     }
 })
 
 export default filtersReducer.reducer;
-export const { changeFilters, removeFilters, clearSearch } = filtersReducer.actions;
+export const { changeFiltersAction, removeFiltersAction, clearSearchAction } = filtersReducer.actions;

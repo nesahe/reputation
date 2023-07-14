@@ -12,7 +12,7 @@ const pageReducer = createSlice({
     name: 'page',
     initialState,
     reducers: {
-        changePage: (state, action: PayloadAction<{ page: number }>) => {
+        changePageAction: (state, action: PayloadAction<{ page: number }>) => {
             const { page } = action.payload;
             state.activePage = page;
         }
@@ -20,4 +20,4 @@ const pageReducer = createSlice({
 })
 
 export default pageReducer.reducer;
-export const { changePage } = pageReducer.actions;
+export const { changePageAction } = pageReducer.actions;

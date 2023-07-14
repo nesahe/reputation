@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { useAppDispatch } from '../../../../../../hooks/useAppDispatch';
-import { removeFilters } from '../../../../../../store/reducers/filtersReducer';
+import { useAppDispatch } from '../../../../hooks/useAppDispatch';
+import { removeFiltersAction } from '../../../../store/reducers/filtersReducer';
 import { useSelector } from 'react-redux';
-import { IRootState } from '../../../../../../store';
+import { IRootState } from '../../../../store';
 
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const ClearFilters = () => {
     const { activeSort, search } = useSelector((state: IRootState) => state.filters)
 
     const clearFilters = () => {
-        dispatch(removeFilters());
+        dispatch(removeFiltersAction());
     }
 
     if (!search && !activeSort) {

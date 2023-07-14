@@ -7,7 +7,7 @@ import { fetchProfile } from './api/fetchProfile';
 
 import { useFetching } from '../../../hooks/useFetching';
 
-import { addUser } from '../../../store/reducers/userReducer';
+import { addUserAction } from '../../../store/reducers/userReducer';
 
 import Loader from './components/Loader';
 
@@ -18,7 +18,7 @@ const Layout = () => {
     const [fetchMyProfile, isProfileLoading, profileError] = useFetching(async () => {
         const { isError, message, data } = await fetchProfile();
         if (!isError) {
-            data && data.user && dispatch(addUser(data.user));
+            data && data.user && dispatch(addUserAction(data.user));
         }
     })
 

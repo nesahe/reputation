@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import styles from './index.module.scss';
 
-import { changeFilters } from '../../../../store/reducers/filtersReducer';
+import { changeFiltersAction } from '../../../../store/reducers/filtersReducer';
 
 import { AxiosError } from 'axios';
 
 import UsersList from '../UsersList';
 import Pagination from '../Pagination';
 import Loader from '../Loader';
-import Sort from './components/Sort';
-import SearchInput from './components/SearchInput';
+import Sort from '../Sort';
+import SearchInput from '../SearchInput';
 import UsersListBody from '../UsersListBody';
-import ErrorMessageBody from './components/ErrorMessageBody';
-import ClearFilters from './components/ClearFilters';
+import ErrorMessageBody from '../ErrorMessageBody';
+import ClearFilters from '../ClearFilters';
 
 import qs from 'qs';
 
@@ -57,7 +57,7 @@ const UsersBody = () => {
     useEffect(() => {
         if (window.location.search && !isMounted.current) {
             const { search, sort } = qs.parse(window.location.search.substring(1)) as { search: string, sort: string }
-            dispatch(changeFilters({ search: search, sort: { value: sort, label: `By ${sort}` } }))
+            dispatch(changeFiltersAction({ search: search, sort: { value: sort, label: `By ${sort}` } }))
         }
     }, [])
 

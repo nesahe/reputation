@@ -2,8 +2,8 @@ import React from 'react';
 
 import Logo from './images/logo.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { removeFilters } from '../../store/reducers/filtersReducer';
-import { changePage } from '../../store/reducers/pageReducer';
+import { removeFiltersAction } from '../../store/reducers/filtersReducer';
+import { changePageAction } from '../../store/reducers/pageReducer';
 
 import styles from './index.module.scss';
 
@@ -16,8 +16,8 @@ const Header = () => {
     const dispatch = useAppDispatch();
 
     const clearFilters = () => {
-        dispatch(removeFilters());
-        dispatch(changePage({ page: 1 }))
+        dispatch(removeFiltersAction());
+        dispatch(changePageAction({ page: 1 }))
     }
 
     return (
