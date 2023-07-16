@@ -23,6 +23,7 @@ const AccountPopup: FC<AccountPopupProps> = ({ open, user }) => {
 
     const unLogin = async () => {
         localStorage.removeItem('jwt');
+        await logoutUser();
         document.location.reload();
     }
 

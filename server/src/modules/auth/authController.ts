@@ -41,7 +41,7 @@ class AuthController {
             const { refreshToken } = req.cookies as { refreshToken: string };
 
             if (!refreshToken) {
-                throw ApiError.badRequest('Cookie not found');
+                throw ApiError.unAuthorizedError();
             }
 
             const result = await authService.logout(refreshToken);
@@ -51,7 +51,7 @@ class AuthController {
                 return res.json({ message: result });
             }
 
-            throw ApiError.badRequest('Refresh token not found');
+            throw ApiError.unAuthorizedError();
 
         } catch (e) {
             next(e);
@@ -74,6 +74,18 @@ class AuthController {
 
     async refresh(req: Request, res: Response, next: NextFunction) {
         try {
+
+            const { refreshToken } = req.cookies as { refreshToken: string };
+
+            if (!refreshToken) {
+                throw ApiError.unAuthorizedError();
+            }
+
+            const userData = await authService.refresh(refreshToken);
+
+            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+
+            return res.json({ accessToken: userData.accessToken, user: userData.user });
 
         } catch (e) {
             next(e);

@@ -1,4 +1,4 @@
-import axios from "axios"
+import $api from "../../../../http";
 
 import API_PATHS from "../../../../constants/API_PATHS"
 
@@ -9,16 +9,7 @@ interface IFetchUsersResponse {
     length: string,
 }
 
-const jwt = localStorage.getItem('jwt');
-
-export const fetchUsers = async (isSearch: boolean, pageSize: string, page: string, sort: string, search: string) => {
-
-    if (!search) {
-        const { data } = await axios.get<IFetchUsersResponse>(`${API_PATHS.fetchUsers}?size=${pageSize}&page=${page}&sort=${sort}&search=${search}`, {
-            headers: {
-                authorization: `Bearer ${jwt}`
-            }
-        });
-        return data
-    }
+export const fetchUsers = async (pageSize: string, page: string, sort: string, search: string) => {
+    const { data } = await $api.get<IFetchUsersResponse>(`/${API_PATHS.fetchUsers}?size=${pageSize}&page=${page}&sort=${sort}&search=${search}`);
+    return data
 }

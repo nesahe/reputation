@@ -111,6 +111,29 @@ class Service {
         return result
     }
 
+    async refresh(refToken: string) {
+        const userId = tokenService.validateRefreshToken(refToken);
+        const tokenFromDb = await tokenService.findRefreshToken(refToken);
+
+        if (!userId || !tokenFromDb) {
+            throw ApiError.unAuthorizedError();
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            throw ApiError.badRequest('User not found');
+        }
+
+        const userDto = new ProfileDto(user);
+
+        const { refreshToken, accessToken } = tokenService.generateTokens({ user: userId });
+
+        await tokenService.saveToken(userId, refreshToken);
+
+        return { accessToken, refreshToken, user: userDto };
+    }
+
 }
 
 export default new Service();

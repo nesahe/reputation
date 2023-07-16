@@ -1,4 +1,4 @@
-import axios from "axios";
+import $api from "../../../../http";
 
 import API_PATHS from "../../../../constants/API_PATHS";
 
@@ -10,7 +10,7 @@ interface IRegistrationForm {
 
 export const registrationUser = async (form: IRegistrationForm) => {
     try {
-        const { data } = await axios.post(`${API_PATHS.registration}?login=${form.login}&password=${form.password}&gender=${form.gender}`);
+        const { data } = await $api.post(`/${API_PATHS.registration}?login=${form.login}&password=${form.password}&gender=${form.gender}`);
         return { message: data.message, isError: false };
     } catch (e: any) {
         return { message: e.response.data.message, isError: true };

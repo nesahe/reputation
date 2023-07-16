@@ -1,16 +1,14 @@
-import axios from 'axios';
+import $api from '../../../../http';
 
 import API_PATHS from '../../../../constants/API_PATHS';
 
-const jwt = localStorage.getItem('jwt');
+interface LogoutUserResponse {
+    message: string
+}
 
 export const logoutUser = async () => {
 
-    const data = await axios.post(`${API_PATHS.logoutUser}`, {}, {
-        headers: {
-            authorization: `Bearer ${jwt}`
-        }
-    })
+    const { data } = await $api.post<LogoutUserResponse>(`/${API_PATHS.logoutUser}`)
 
-    console.log(data);
+    return data
 }

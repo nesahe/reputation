@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 
 import { errorMiddleware } from './middlewares/errorMiddleware';
 
+import { CLIENT_URL } from './constants';
+
 import router from './router';
 
 import cors from 'cors';
@@ -21,7 +23,11 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 
 
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: CLIENT_URL,
+    credentials: true
+}));
+
 app.use('/api', router);
 app.use(errorMiddleware);
 

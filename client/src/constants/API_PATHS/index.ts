@@ -1,13 +1,12 @@
-import { API_URL } from "..";
-
 const API_PATHS = {
-    registration: `${API_URL}/auth/registration`,
-    login: `${API_URL}/auth/login`,
-    fetchUsers: `${API_URL}/reputation`,
-    fetchProfile: `${API_URL}/auth/profile`,
-    likeUser: `${API_URL}/reputation/like`,
-    unLikeUser: `${API_URL}/reputation/unlike`,
-    logoutUser: `${API_URL}/auth/logout`,
+    registration: `auth/registration`,
+    login: `auth/login`,
+    fetchUsers: `reputation`,
+    fetchProfile: `auth/profile`,
+    likeUser: `reputation/like`,
+    unLikeUser: `reputation/unlike`,
+    logoutUser: `auth/logout`,
+    refresh: `auth/refresh`
 }
 
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import $api from '../../../../http';
 
 import API_PATHS from '../../../../constants/API_PATHS';
 
@@ -6,18 +6,12 @@ interface FetchActivityReputationResponse {
     message: string
 }
 
-const jwt = localStorage.getItem('jwt');
-
 export const fetchActivityReputation = async (isLiked: boolean, user: string) => {
     try {
 
         const viewActivity = isLiked ? 'unLikeUser' : 'likeUser'
 
-        const { data } = await axios.post<FetchActivityReputationResponse>(`${API_PATHS[viewActivity]}?user=${user}`, {}, {
-            headers: {
-                authorization: `Bearer ${jwt}`
-            }
-        });
+        const { data } = await $api.post<FetchActivityReputationResponse>(`/${API_PATHS[viewActivity]}?user=${user}`);
 
         return { isError: false, message: data.message }
 

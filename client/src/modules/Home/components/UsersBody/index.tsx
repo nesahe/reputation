@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import styles from './index.module.scss';
 
@@ -39,12 +39,10 @@ const UsersBody = () => {
     const { activePage } = useSelector((state: IRootState) => state.page);
 
     const isMounted = useRef(false);
-    const isSearch = useRef(false);
-
 
     const pageSize = 3;
 
-    const { isLoading, error, data } = useQuery(['users', [activePage, activeSort, search]], () => fetchUsers(isSearch.current, String(pageSize), String(activePage - 1), activeSort?.value || '', search.toLowerCase()), {
+    const { isLoading, error, data } = useQuery(['users', [activePage, activeSort, search]], () => fetchUsers(String(pageSize), String(activePage - 1), activeSort?.value || '', search.toLowerCase()), {
         refetchOnWindowFocus: false,
         keepPreviousData: true
     })
@@ -58,7 +56,6 @@ const UsersBody = () => {
         if (window.location.search && !isMounted.current) {
             const { search, sort } = qs.parse(window.location.search.substring(1)) as { search: string, sort: string }
             dispatch(changeFiltersAction({ search: search, sort: { value: sort, label: `By ${sort}` } }))
-            isSearch.current = true
         }
     }, [])
 
@@ -77,10 +74,6 @@ const UsersBody = () => {
         isMounted.current = true;
 
     }, [search, activeSort])
-
-    useEffect(() => {
-        isSearch.current = false
-    }, []);
 
     if (isLoading) {
         return <Loader />

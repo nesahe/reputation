@@ -7,7 +7,7 @@ export const errorMiddleware = (err: ApiError, req: Request, res: Response, next
 
     if (err instanceof ApiError) {
         logger.error({ message: err.message });
-        return res.status(err.status).json({ message: err.message, errors: err.errors });
+        return res.status(err.status).json({ message: err.message });
     }
 
     return res.status(500).json({ message: 'Unexpected error' });
