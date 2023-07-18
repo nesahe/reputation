@@ -122,7 +122,7 @@ class Service {
         const user = await User.findById(userId);
 
         if (!user) {
-            throw ApiError.badRequest('User not found');
+            throw ApiError.badRequest('Profile not found');
         }
 
         const userDto = new ProfileDto(user);

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { publicRoutesArr, privateRoutesArr } from '../../../router/routes';
 
 import { Route, Routes } from 'react-router-dom';

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Robot from './images/robot.svg';
 
 import styles from './index.module.scss';

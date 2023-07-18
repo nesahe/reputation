@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './index.module.scss';
 
 import AuthButton from './components/AuthButton';
@@ -54,7 +54,7 @@ const Registration = () => {
 
     const [formRegistration, setFormRegistration] = useState<IRegistrationForm>({ login: '', password: '' });
 
-    const [registrationFetch, isRegistrationLoading, registrationError] = useFetching(async () => {
+    const [registrationFetch, isRegistrationLoading] = useFetching(async () => {
         if (gender) {
             const { isError, message } = await registrationUser({ ...formRegistration, gender: gender.value });
             isError

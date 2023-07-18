@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { chooseImageByGender } from '../../helpers/chooseImageByGender';
 import { getNickname } from '../../helpers/getNickname';

@@ -10,8 +10,12 @@ interface RefreshTokenResponse {
 }
 
 const updateAccessToken = async () => {
-    const { data } = await axios.get<RefreshTokenResponse>(`${API_URL}/${API_PATHS.refresh}`, { withCredentials: true });
-    return data.accessToken;
+    try {
+        const { data } = await axios.get<RefreshTokenResponse>(`${API_URL}/${API_PATHS.refresh}`, { withCredentials: true });
+        return data.accessToken;
+    } catch (e) {
+        return null
+    }
 
 }
 

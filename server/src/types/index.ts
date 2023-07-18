@@ -16,7 +16,9 @@ export interface IUser {
     activationLink: string
     _id: string
     reputation: number,
-    lastVoting: string
+    lastVoting: string,
+    likedUsers: string[],
+    isLiked: boolean
 }
 
 export interface IToken {
@@ -30,5 +32,6 @@ export interface IReputationDto {
     login: string,
     id: string,
     gender: string,
-    reputation: number
+    reputation: number,
+    isLiked: boolean
 }

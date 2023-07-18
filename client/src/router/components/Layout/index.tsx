@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Outlet } from 'react-router-dom';
 
@@ -15,16 +15,21 @@ const Layout = () => {
 
     const dispatch = useAppDispatch();
 
-    const [fetchRefreshWithProfile, isRefreshLoading, refreshError] = useFetching(async () => {
+    const [isRefresh, setIsRefresh] = useState<boolean>(false);
+
+
+    const [fetchRefreshWithProfile, isRefreshLoading] = useFetching(async () => {
         const { user } = await fetchRefreshToken();
         dispatch(addUserAction(user));
+        setIsRefresh(true)
     })
 
+
     useEffect(() => {
-        localStorage.getItem('jwt') && fetchRefreshWithProfile();
+        localStorage.getItem('jwt') ? fetchRefreshWithProfile() : setIsRefresh(true)
     }, [])
 
-    return isRefreshLoading ? <Loader /> : <Outlet />
+    return isRefreshLoading || !isRefresh ? <Loader /> : <Outlet />
 };
 
 export default Layout;

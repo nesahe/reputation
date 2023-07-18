@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 
 import AccountPopup from '../AccountPopup';
 
@@ -20,7 +20,7 @@ const AccountBody = () => {
 
     return (
         <div className={styles.root__account_body}>
-            <div onClick={() => setOpen(!open)} className={styles.root__account_panel}>
+            <div className={styles.root__account_panel}>
                 <div className={styles.root__account_avatar}>
                     <img src={chooseImageByGender(user.gender)} alt="avatar" />
                 </div>

@@ -21,9 +21,7 @@ import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../store';
 
-import { useQuery } from 'react-query';
-
-import { fetchUsers } from '../../api/fetchUsers';
+import { useFetchUsers } from '../../queries';
 
 import { getPaginationItemCount } from '../../helpers/getPaginationItemCount';
 import { getPaginationSlice } from '../../helpers/getPaginationSlice';
@@ -42,10 +40,7 @@ const UsersBody = () => {
 
     const pageSize = 3;
 
-    const { isLoading, error, data } = useQuery(['users', [activePage, activeSort, search]], () => fetchUsers(String(pageSize), String(activePage - 1), activeSort?.value || '', search.toLowerCase()), {
-        refetchOnWindowFocus: false,
-        keepPreviousData: true
-    })
+    const { isLoading, error, data } = useFetchUsers(activePage, activeSort, search, pageSize);
 
     const navigate = useNavigate();
 
@@ -103,7 +98,7 @@ const UsersBody = () => {
                 <Sort />
                 <SearchInput />
             </div>
-            <UsersList sort={activeSort?.value || ''} activePage={activePage} size={pageSize} users={data.users} />
+            <UsersList sort={activeSort?.value || ''} size={pageSize} users={data.users} />
             <Pagination length={fullPaginationItemsArr.length} size={slicePaginationItemsArr} />
         </div>
     );

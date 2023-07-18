@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Logo from './images/logo.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { removeFiltersAction } from '../../store/reducers/filtersReducer';

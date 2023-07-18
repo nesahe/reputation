@@ -35,29 +35,6 @@ class AuthController {
         }
     }
 
-    async logout(req: Request, res: Response, next: NextFunction) {
-        try {
-
-            const { refreshToken } = req.cookies as { refreshToken: string };
-
-            if (!refreshToken) {
-                throw ApiError.unAuthorizedError();
-            }
-
-            const result = await authService.logout(refreshToken);
-
-            if (result) {
-                res.clearCookie('refreshToken');
-                return res.json({ message: result });
-            }
-
-            throw ApiError.unAuthorizedError();
-
-        } catch (e) {
-            next(e);
-        }
-    }
-
     async activateAccount(req: Request, res: Response, next: NextFunction) {
         try {
 
@@ -65,27 +42,7 @@ class AuthController {
 
             await authService.activateAccount(link);
 
-            res.redirect(`${CLIENT_URL}/login`);
-
-        } catch (e) {
-            next(e);
-        }
-    }
-
-    async refresh(req: Request, res: Response, next: NextFunction) {
-        try {
-
-            const { refreshToken } = req.cookies as { refreshToken: string };
-
-            if (!refreshToken) {
-                throw ApiError.unAuthorizedError();
-            }
-
-            const userData = await authService.refresh(refreshToken);
-
-            res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
-
-            return res.json({ accessToken: userData.accessToken, user: userData.user });
+            res.redirect(`${CLIENT_URL}`);
 
         } catch (e) {
             next(e);

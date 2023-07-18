@@ -4,7 +4,8 @@ export interface IUser {
     login: string,
     id: string,
     reputation: number,
-    gender: string
+    gender: string,
+    isLiked: boolean
 }
 
 export interface IProfile {

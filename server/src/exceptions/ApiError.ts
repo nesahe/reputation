@@ -13,4 +13,8 @@ export default class ApiError extends Error {
     static badRequest(message: string) {
         return new ApiError(400, message);
     }
+
+    static badRefreshToken() {
+        return new ApiError(403, 'Login please');
+    }
 }

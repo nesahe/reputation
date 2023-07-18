@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { removeFiltersAction } from '../../../../store/reducers/filtersReducer';
 import { useSelector } from 'react-redux';

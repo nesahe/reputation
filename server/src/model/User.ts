@@ -10,6 +10,8 @@ const user = new Schema<IUser>({
     activationLink: { type: String },
     reputation: { type: Number, default: 0 },
     lastVoting: { type: String, default: '' },
+    likedUsers: [{ type: String }],
+    isLiked: { type: Boolean, default: false }
 })
 
 export default model<IUser>('User', user);

@@ -9,7 +9,9 @@ class Controller {
 
             const { size, page, sort, search } = req.query as { size: string, page: string, sort: string, search: string };
 
-            const { users, length } = await reputationService.getUsers(+size, +page, sort, search);
+            const { userId } = req as { userId: string };
+
+            const { users, length } = await reputationService.getUsers(userId, +size, +page, sort, search);
 
             return res.json({ users, length });
 
@@ -23,9 +25,11 @@ class Controller {
 
             const { user } = req.query as { user: string }
 
-            console.log(user);
+            const profileId = req.userId;
 
-            res.status(400).json({ message: 'sss' })
+            await reputationService.likeUser(user, profileId);
+
+            return res.json({ message: true });
 
         } catch (e) {
             next(e);
@@ -35,7 +39,13 @@ class Controller {
     async unLikeUser(req: Request, res: Response, next: NextFunction) {
         try {
 
-            const { user } = req.query as { user: string }
+            const { user } = req.query as { user: string };
+
+            const profileId = req.userId;
+
+            await reputationService.unLikeUser(user, profileId);
+
+            return res.json({ message: true });
 
         } catch (e) {
             next(e);

@@ -5,8 +5,8 @@ const API_PATHS = {
     fetchProfile: `auth/profile`,
     likeUser: `reputation/like`,
     unLikeUser: `reputation/unlike`,
-    logoutUser: `auth/logout`,
-    refresh: `auth/refresh`
+    logoutUser: `token/logout`,
+    refresh: `token/refresh`
 }
 
 
