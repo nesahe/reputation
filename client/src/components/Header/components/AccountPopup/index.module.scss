@@ -2,14 +2,10 @@
     &__account__popup {
         position: absolute;
         right: 0;
-        display: none;
         border: 3px solid rgb(230, 230, 230);
         padding: 10px;
         z-index: 3;
         background: #fff;
-    }
-    &__account__popup.open {
-        display: block;
     }
     &__account__popup__body {
         display: flex;

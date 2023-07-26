@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, FC } from 'react';
 
 import AccountPopup from '../AccountPopup';
 
@@ -12,14 +12,22 @@ import Arrow from '../../images/arrow.svg';
 import styles from './index.module.scss';
 
 
-const AccountBody = () => {
+interface AccountBodyProps {
+    open: boolean,
+    setOpen: (open: boolean) => void
+}
 
-    const [open, setOpen] = useState<boolean>(false);
+const AccountBody: FC<AccountBodyProps> = ({ open, setOpen }) => {
 
     const user = useSelector((state: IRootState) => state.user.user);
 
+    const clickAccountBody = (e: MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setOpen(!open);
+    }
+
     return (
-        <div className={styles.root__account_body}>
+        <div onClick={clickAccountBody} className={styles.root__account_body}>
             <div className={styles.root__account_panel}>
                 <div className={styles.root__account_avatar}>
                     <img src={chooseImageByGender(user.gender)} alt="avatar" />
@@ -28,7 +36,7 @@ const AccountBody = () => {
                     <img src={Arrow} alt="arrow" />
                 </div>
             </div>
-            <AccountPopup user={user} open={open} />
+            {open && <AccountPopup user={user} />}
         </div>
     );
 };

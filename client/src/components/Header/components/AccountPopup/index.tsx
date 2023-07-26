@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 
 import { chooseImageByGender } from '../../helpers/chooseImageByGender';
 import { getNickname } from '../../helpers/getNickname';
@@ -9,15 +9,10 @@ import styles from './index.module.scss'
 import { IProfile } from '../../../../types';
 
 interface AccountPopupProps {
-    open: boolean,
     user: IProfile
 }
 
-const AccountPopup: FC<AccountPopupProps> = ({ open, user }) => {
-
-    const rootClasses = [styles.root__account__popup];
-
-    open && rootClasses.push(styles.open);
+const AccountPopup: FC<AccountPopupProps> = ({ user }) => {
 
     const nickname = getNickname(user.login)
 
@@ -28,7 +23,7 @@ const AccountPopup: FC<AccountPopupProps> = ({ open, user }) => {
     }
 
     return (
-        <div className={rootClasses.join(' ')}>
+        <div onClick={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()} className={styles.root__account__popup}>
             <div className={styles.root__account__popup__body}>
                 <div className={styles.root__account__panel__avatar}>
                     <img src={chooseImageByGender(user.gender)} alt="avatar" />

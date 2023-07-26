@@ -24,6 +24,8 @@ const options = [
     }
 ]
 
+export const optionForValid = ['reputation', 'login'];
+
 
 const Sort = () => {
 

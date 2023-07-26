@@ -1,8 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, FC, MutableRefObject } from 'react';
 
 import styles from './index.module.scss';
-
-import { changeFiltersAction } from '../../../../store/reducers/filtersReducer';
 
 import { AxiosError } from 'axios';
 
@@ -17,7 +15,6 @@ import ClearFilters from '../ClearFilters';
 
 import qs from 'qs';
 
-import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../store';
 
@@ -29,14 +26,15 @@ import { getPaginationSlice } from '../../helpers/getPaginationSlice';
 import { useNavigate } from 'react-router-dom';
 
 
-const UsersBody = () => {
+interface UsersBodyProps {
+    isMounted: MutableRefObject<boolean>
+}
 
-    const dispatch = useAppDispatch();
+
+const UsersBody: FC<UsersBodyProps> = ({ isMounted }) => {
 
     const { activeSort, search } = useSelector((state: IRootState) => state.filters);
     const { activePage } = useSelector((state: IRootState) => state.page);
-
-    const isMounted = useRef(false);
 
     const pageSize = 3;
 
@@ -45,14 +43,6 @@ const UsersBody = () => {
     const navigate = useNavigate();
 
     const errorBody = error as AxiosError;
-
-
-    useEffect(() => {
-        if (window.location.search && !isMounted.current) {
-            const { search, sort } = qs.parse(window.location.search.substring(1)) as { search: string, sort: string }
-            dispatch(changeFiltersAction({ search: search, sort: { value: sort, label: `By ${sort}` } }))
-        }
-    }, [])
 
     useEffect(() => {
         if (isMounted.current) {
@@ -69,6 +59,7 @@ const UsersBody = () => {
         isMounted.current = true;
 
     }, [search, activeSort])
+
 
     if (isLoading) {
         return <Loader />

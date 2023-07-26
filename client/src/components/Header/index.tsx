@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import Logo from './images/logo.svg';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { removeFiltersAction } from '../../store/reducers/filtersReducer';
@@ -9,7 +10,12 @@ import { Link } from 'react-router-dom'
 
 import AccountBody from './components/AccountBody';
 
-const Header = () => {
+interface HeaderProps {
+    open: boolean,
+    setOpen: (open: boolean) => void
+}
+
+const Header: FC<HeaderProps> = ({ open, setOpen }) => {
 
     const dispatch = useAppDispatch();
 
@@ -25,7 +31,7 @@ const Header = () => {
                     <Link onClick={clearFilters} to="/" className={styles.root__logo}>
                         <img src={Logo} alt="logo" />
                     </Link>
-                    <AccountBody />
+                    <AccountBody open={open} setOpen={setOpen} />
                 </div>
             </div>
         </header>
