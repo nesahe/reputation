@@ -14,6 +14,8 @@ import { IUser } from '../../../../types';
 import { useSelector } from 'react-redux';
 import { IRootState } from '../../../../store';
 
+import LoaderReputation from '../LoaderReputation';
+
 
 interface UsersReputationBodyProps {
     user: IUser,
@@ -31,42 +33,36 @@ const UsersReputationBody: FC<UsersReputationBodyProps> = ({ user, messageError,
 
     const [isLiked, setIsLiked] = useState<boolean>(user.isLiked);
 
-
     const [fetchActivitingReputation, isActivitingReputationLoading] = useFetching(async () => {
         const { isError, message } = await fetchActivityReputation(isLiked, user.id);
-        isError && setMessageError(message);
+        if (isError) {
+            setMessageError(message);
+        } else {
+            setReputation(isLiked ? reputation - 1 : reputation + 1);
+            setIsLiked(!isLiked);
+        }
     })
 
+
     const activityUser = async () => {
-
         setMessageError('');
-
-        setReputationBeforeVoting(reputation);
-
-        setIsLiked(!isLiked);
-        setReputation(isLiked ? reputation - 1 : reputation + 1);
         fetchActivitingReputation();
     }
 
-
-    useEffect(() => {
-
-        if (messageError) {
-            setIsLiked(!isLiked);
-            setReputation(reputationBeforeVoting);
-        }
-
-    }, [messageError])
-
     return (
         <div className={styles.root__reputation}>
-            {profile.login !== user.login
-                ? <button disabled={isActivitingReputationLoading} onClick={activityUser} className={styles.root__reputation__button}>
-                    <img src={isLiked ? ActiveLike : Like} alt="like" />
-                </button>
-                : <div className={styles.root__reputation__button_pattern}></div>
+            {isActivitingReputationLoading
+                ? <LoaderReputation />
+                : <>
+                    {profile.login !== user.login
+                        ? <button onClick={activityUser} className={styles.root__reputation__button}>
+                            <img src={isLiked ? ActiveLike : Like} alt="like" />
+                        </button>
+                        : <div className={styles.root__reputation__button_pattern}></div>
+                    }
+                    <div className={styles.root__reputation__counter}>{reputation}</div>
+                </>
             }
-            <div className={styles.root__reputation__counter}>{reputation}</div>
         </div>
     );
 };

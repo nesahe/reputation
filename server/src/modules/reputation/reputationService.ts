@@ -8,10 +8,12 @@ import { sortUsers } from "./helpers/sortUsers";
 import { getDateVoting } from "./helpers/getDateVoting";
 
 import ApiError from "../../exceptions/ApiError";
+import { validSortMethod } from "./helpers/validSortMethod";
 
 class Service {
 
     async getUsers(userId: string, size: number, page: number, sort: string, search: string) {
+
         const users = await User.find();
 
         if (users.length === 0) {
@@ -19,10 +21,11 @@ class Service {
         }
         const allUsers = users.map(item => new ReputationDto(item))
 
-        if (!page && page > 0 || !size) {
+        const isSortValid = validSortMethod(sort);
+
+        if (!page && page > 0 || !size || !isSortValid) {
             return { users: allUsers, length: allUsers.length }
         }
-
 
         const searchedUsers = searchUsers(allUsers, search);
         const sortedSearchedUsers = sortUsers(searchedUsers, sort);
@@ -41,7 +44,7 @@ class Service {
 
         const likedSlicedSearchedSortedUsers = slicedSearchedSortedUsers.map(item => {
             if (myLikedUsers.includes(item.id)) {
-                item.isLiked = true
+                item.isLiked = true;
             }
 
             return item
