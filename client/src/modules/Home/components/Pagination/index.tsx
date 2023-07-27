@@ -1,7 +1,11 @@
 import { FC } from 'react';
 
-import ArrowLeft from './images/arrow-left.svg';
-import ArrowRight from './images/arrow-right.svg';
+import ArrowLeftDisabled from './images/arrow-left-disabled.svg';
+import ArrowRightDisabled from './images/arrow-right-disabled.svg';
+
+import ArrowLeftActive from './images/arrow-left-active.svg';
+import ArrowRightActive from './images/arrow-right-active.svg';
+
 import { useAppDispatch } from '../../../../hooks/useAppDispatch';
 import { useSelector } from 'react-redux';
 import { changePageAction } from '../../../../store/reducers/pageReducer';
@@ -28,9 +32,12 @@ const Pagination: FC<PaginationProps> = ({ size, length }) => {
 
     return (
         <section className={styles.root}>
-            {activePage > 1 &&
-                <div onClick={() => dispatch(changePageAction({ page: activePage - 1 }))} className={styles.root__arrow}>
-                    <img src={ArrowLeft} alt="arrow-back" />
+            {activePage > 1
+                ? <div onClick={() => dispatch(changePageAction({ page: activePage - 1 }))} className={[styles.root__arrow, styles.root__arrow_active].join(' ')}>
+                    <img src={ArrowLeftActive} alt="arrow-back-active" />
+                </div>
+                : <div className={styles.root__arrow}>
+                    <img src={ArrowLeftDisabled} alt="arrow-back-disabled" />
                 </div>
             }
             <div className={styles.root__body}>
@@ -38,9 +45,12 @@ const Pagination: FC<PaginationProps> = ({ size, length }) => {
                     <div onClick={() => dispatch(changePageAction({ page: +i }))} className={+i === activePage ? rootClasses.join(' ') : styles.root__item} key={i}>{i}</div>
                 )}
             </div>
-            {activePage !== length &&
-                <div onClick={() => dispatch(changePageAction({ page: activePage + 1 }))} className={styles.root__arrow}>
-                    <img src={ArrowRight} alt="arrow-next" />
+            {activePage !== length
+                ? <div onClick={() => dispatch(changePageAction({ page: activePage + 1 }))} className={[styles.root__arrow, styles.root__arrow_active].join(' ')}>
+                    <img src={ArrowRightActive} alt="arrow-next" />
+                </div>
+                : <div className={styles.root__arrow}>
+                    <img src={ArrowRightDisabled} alt="arrow-next" />
                 </div>
             }
         </section>
