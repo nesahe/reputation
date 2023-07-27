@@ -1,7 +1,7 @@
 import { IReputationDto } from "../../../../types"
 
 export const sortUsers = (users: IReputationDto[], sort: string): IReputationDto[] => {
-    let sortedUsers = users;
+    const sortedUsers = users;
 
     if (sort) {
         sort === 'reputation'

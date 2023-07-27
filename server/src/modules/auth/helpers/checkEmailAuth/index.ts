@@ -1,5 +1,10 @@
-const emails = ['@gmail.com', '@mail.ru', '@ya.ru', '@bk.ru'];
+const emailDomains = ['gmail.com', 'mail.ru', 'ya.ru', 'bk.ru'];
 
 export const checkEmailAuth = (email: string): boolean => {
-    return emails.some(item => email.includes(item));
+
+    const splittedEmail = email.split('@');
+
+    const mailDomain = splittedEmail[1];
+
+    return emailDomains.includes(mailDomain) && splittedEmail.length === 2;
 }
