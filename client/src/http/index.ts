@@ -39,7 +39,12 @@ $api.interceptors.response.use((response: AxiosResponse) => {
         originalRequest._retry = true;
         const accessToken = await updateAccessToken();
 
-        localStorage.setItem('jwt', accessToken || '');
+        if (accessToken) {
+            localStorage.setItem('jwt', accessToken);
+        } else {
+            localStorage.removeItem('jwt');
+            window.location.reload();
+        }
 
         return $api(originalRequest);
     }

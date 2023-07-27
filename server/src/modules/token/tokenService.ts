@@ -14,7 +14,7 @@ class TokenService {
     generateTokens(payload: IPayloadGenerateJwt): { accessToken: string, refreshToken: string } {
 
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET || '', {
-            expiresIn: '15s'
+            expiresIn: '60s'
         })
 
 

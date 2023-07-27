@@ -9,10 +9,10 @@ interface UsersListBodyProps {
 
 const UsersListBody: FC<UsersListBodyProps> = ({ children, title }) => {
     return (
-        <div className={styles.root}>
+        <section className={styles.root}>
             <div className={styles.root__title}>{title}</div>
             {children}
-        </div>
+        </section>
     );
 };
 

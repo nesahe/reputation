@@ -41,7 +41,7 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index, size, sort }) => {
 
 
     return (
-        <div className={profile._id === user.id ? rootClasses.join(' ') : styles.root}>
+        <article className={profile._id === user.id ? rootClasses.join(' ') : styles.root}>
             <ErrorMessage message={messageError} setMessage={setMessageError} />
             <div className={styles.root__profile__info}>
                 <div className={styles.root__place}>
@@ -58,7 +58,7 @@ const UsersItem: FC<IUsersItemProps> = ({ user, index, size, sort }) => {
                 <div className={styles.root__name}>{nickname}</div>
             </div>
             <UsersReputationBody user={user} setMessageError={setMessageError} messageError={messageError} />
-        </div>
+        </article>
     );
 };
 

@@ -40,7 +40,9 @@ class Service {
             throw ApiError.unAuthorizedError();
         }
 
-        const myLikedUsers = profile.likedUsers;
+        const isVotingToday = getDateVoting() === profile.lastVoting;
+
+        const myLikedUsers = isVotingToday ? profile.likedUsers : [];
 
         const likedSlicedSearchedSortedUsers = slicedSearchedSortedUsers.map(item => {
             if (myLikedUsers.includes(item.id)) {

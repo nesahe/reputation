@@ -1,4 +1,4 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, FC } from 'react';
 
 import { fetchActivityReputation } from '../../api/fetchActivityReputation';
 
@@ -28,8 +28,6 @@ const UsersReputationBody: FC<UsersReputationBodyProps> = ({ user, messageError,
     const profile = useSelector((state: IRootState) => state.user.user);
 
     const [reputation, setReputation] = useState<number>(user.reputation);
-
-    const [reputationBeforeVoting, setReputationBeforeVoting] = useState<number>(0);
 
     const [isLiked, setIsLiked] = useState<boolean>(user.isLiked);
 

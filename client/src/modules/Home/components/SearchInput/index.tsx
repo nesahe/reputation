@@ -50,7 +50,7 @@ const SearchInput = () => {
 
     return (
         <div className={styles.root}>
-            <input ref={inputRef} className={styles.root__input} onChange={changeInput} value={value} type="text" />
+            <input placeholder='Search...' ref={inputRef} className={styles.root__input} onChange={changeInput} value={value} type="text" />
             {value.length > 0 &&
                 <div onClick={clear} className={styles.root__close}>
                     <img src={Close} alt="close" />

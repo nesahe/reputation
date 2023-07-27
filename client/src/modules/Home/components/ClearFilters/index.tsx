@@ -10,7 +10,6 @@ import Clear from './images/clear.svg';
 import styles from './index.module.scss';
 
 
-
 const ClearFilters = () => {
 
     const dispatch = useAppDispatch();

@@ -84,11 +84,11 @@ const UsersBody: FC<UsersBodyProps> = ({ isMounted }) => {
 
     return (
         <div className={styles.root}>
-            <div className={styles.root__top}>
+            <section className={styles.root__top}>
                 <ClearFilters />
                 <Sort />
                 <SearchInput />
-            </div>
+            </section>
             <UsersList sort={activeSort?.value || ''} size={pageSize} users={data.users} />
             <Pagination length={fullPaginationItemsArr.length} size={slicePaginationItemsArr} />
         </div>

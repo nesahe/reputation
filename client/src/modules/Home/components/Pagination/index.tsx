@@ -27,7 +27,7 @@ const Pagination: FC<PaginationProps> = ({ size, length }) => {
     }
 
     return (
-        <div className={styles.root}>
+        <section className={styles.root}>
             {activePage > 1 &&
                 <div onClick={() => dispatch(changePageAction({ page: activePage - 1 }))} className={styles.root__arrow}>
                     <img src={ArrowLeft} alt="arrow-back" />
@@ -43,7 +43,7 @@ const Pagination: FC<PaginationProps> = ({ size, length }) => {
                     <img src={ArrowRight} alt="arrow-next" />
                 </div>
             }
-        </div>
+        </section>
     );
 };
 
