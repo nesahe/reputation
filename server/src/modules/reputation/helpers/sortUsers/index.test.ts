@@ -20,9 +20,14 @@ describe('Sort users', () => {
     ]
 
     test('Sort users: reputation', () => {
-        console.log(sortUsers([...usersArr], 'reputation'));
-        console.log([...usersArr]);
-
         expect(sortUsers([...usersArr], 'reputation')).toEqual([...usersArr].reverse());
+    })
+
+    test('Sort users: login', () => {
+        expect(sortUsers([...usersArr], 'login')).toEqual(usersArr)
+    })
+
+    test(`Sort users: ''`, () => {
+        expect(sortUsers([...usersArr], '')).toEqual(usersArr);
     })
 })

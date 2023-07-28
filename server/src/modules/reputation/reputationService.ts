@@ -28,7 +28,7 @@ class Service {
         }
 
         const searchedUsers = searchUsers(allUsers, search);
-        const sortedSearchedUsers = sortUsers(searchedUsers, sort);
+        const sortedSearchedUsers = sortUsers([...searchedUsers], sort);
 
         const startItem = page * size;
 
